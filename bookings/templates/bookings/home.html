@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,18 +24,25 @@
 
         <section class="row mb-4">
             <div class="col-md-6">
-                <h2>Burton Latimer Baptist Church</h2>
-                <p>
-                    Our rooms are available for meetings, activities
-                    and community use.
-                </p>
+                <img src="{% static 'images/BLBC.jpg' %}"
+                    class="img-fluid"
+                    alt="Burton Latimer Baptist Church">
             </div>
 
             <div class="col-md-6">
                 <h2>Booking Information</h2>
+
                 <p>
-                    Please check availability and read the booking
-                    conditions before making a request.
+                    Please check availability before making a booking request.
+                </p>
+
+                <p>
+                    Please read the booking conditions before submitting
+                    your request.
+                </p>
+
+                <p>
+                     Bookings are subject to confirmation by the church.
                 </p>
             </div>
         </section>
@@ -61,6 +70,7 @@
 
                             <p>
                                 £{{ room.hourly_rate }} per hour
+                                <a href="#" class="btn btn-primary">Book this room</a>
                             </p>
 
                         </div>
