@@ -79,7 +79,6 @@ def booking(request):
 
                 fee = duration * room.hourly_rate
 
-
                 messages.success(
                     request,
                     f"Your booking request has been submitted. "
