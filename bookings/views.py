@@ -1,3 +1,5 @@
+from datetime import date, datetime
+from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
@@ -15,44 +17,77 @@ def booking(request):
 
     if request.method == "POST":
         room = Room.objects.get(id=request.POST.get("room"))
-        date = request.POST.get("date")
+        date_value = request.POST.get("date")
         start_time = request.POST.get("start_time")
         end_time = request.POST.get("end_time")
 
-        overlapping_booking = Booking.objects.filter(
-            room=room,
-            date=date,
-            start_time__lt=end_time,
-            end_time__gt=start_time,
-        ).exists()
+        booking_date = datetime.strptime(
+            date_value, "%Y-%m-%d"
+        ).date()
 
-        if overlapping_booking:
+        if booking_date < date.today():
             messages.error(
                 request,
-                "This room is already booked for the selected time.",
+                "You cannot book a date in the past.",
+            )
+        elif (
+            booking_date == date.today()
+            and start_time <= datetime.now().strftime("%H:%M")
+        ):
+            messages.error(
+                request,
+                "You cannot book a time that has already passed.",
+            )
+        elif end_time <= start_time:
+            messages.error(
+                request,
+                "The end time must be after the start time.",
             )
         else:
-            customer = Customer.objects.create(
-                name=request.POST.get("name"),
-                phone=request.POST.get("phone"),
-                email=request.POST.get("email"),
-            )
-
-            Booking.objects.create(
-                customer=customer,
+            overlapping_booking = Booking.objects.filter(
                 room=room,
-                date=date,
-                start_time=start_time,
-                end_time=end_time,
-            )
+                date=date_value,
+                start_time__lt=end_time,
+                end_time__gt=start_time,
+            ).exists()
 
-            messages.success(
-                request,
-                "Your booking request has been submitted and is currently "
-                "pending confirmation.",
-            )
+            if overlapping_booking:
+                messages.error(
+                    request,
+                    "This room is already booked for the selected time.",
+                )
+            else:
+                customer = Customer.objects.create(
+                    name=request.POST.get("name"),
+                    phone=request.POST.get("phone"),
+                    email=request.POST.get("email"),
+                )
 
-            return redirect("booking")
+                Booking.objects.create(
+                    customer=customer,
+                    room=room,
+                    date=date_value,
+                    start_time=start_time,
+                    end_time=end_time,
+                )
+                start = datetime.strptime(start_time, "%H:%M")
+                end = datetime.strptime(end_time, "%H:%M")
+
+                duration = Decimal(
+                    (end - start).total_seconds()
+                ) / Decimal(3600)
+
+                fee = duration * room.hourly_rate
+
+
+                messages.success(
+                    request,
+                    f"Your booking request has been submitted. "
+                    f"Duration: {duration} hours. "
+                    f"Fee: £{fee:.2f}. "
+                    f"Your booking is currently pending confirmation.",
+                )
+                return redirect("booking")
 
     rooms = Room.objects.filter(available=True)
 
