@@ -93,3 +93,21 @@ def booking(request):
     rooms = Room.objects.filter(available=True)
 
     return render(request, "bookings/booking.html", {"rooms": rooms})
+
+
+def availability(request):
+
+    rooms = Room.objects.filter(available=True)
+
+    bookings = Booking.objects.filter(
+        date__gte=date.today()
+    ).order_by("date", "start_time")
+
+    return render(
+        request,
+        "bookings/availability.html",
+        {
+            "rooms": rooms,
+            "bookings": bookings,
+        },
+    )

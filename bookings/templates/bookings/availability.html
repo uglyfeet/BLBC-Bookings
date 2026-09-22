@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLBC | Availability</title>
+</head>
+
+<body>
+
+    <h1>Room Availability</h1>
+
+    {% for room in rooms %}
+
+        <h2>{{ room.name }}</h2>
+
+        {% for booking in bookings %}
+
+            {% if booking.room.id == room.id %}
+
+                <p>
+                    {{ booking.date }}
+                    -
+                    {{ booking.start_time }}
+                    to
+                    {{ booking.end_time }}
+                    -
+                    {{ booking.status }}
+                </p>
+
+            {% endif %}
+
+        {% empty %}
+
+            <p>No rooms available.</p>
+
+        {% endfor %}
+
+    {% endfor %}
+
+</body>
+
+</html>
