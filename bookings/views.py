@@ -63,13 +63,6 @@ def booking(request):
                     email=request.POST.get("email"),
                 )
 
-                Booking.objects.create(
-                    customer=customer,
-                    room=room,
-                    date=date_value,
-                    start_time=start_time,
-                    end_time=end_time,
-                )
                 start = datetime.strptime(start_time, "%H:%M")
                 end = datetime.strptime(end_time, "%H:%M")
 
@@ -78,6 +71,15 @@ def booking(request):
                 ) / Decimal(3600)
 
                 fee = duration * room.hourly_rate
+
+                Booking.objects.create(
+                    customer=customer,
+                    room=room,
+                    date=date_value,
+                    start_time=start_time,
+                    end_time=end_time,
+                    fee=fee,
+                )
 
                 messages.success(
                     request,

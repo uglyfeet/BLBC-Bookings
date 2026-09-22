@@ -28,6 +28,7 @@ class Booking(models.Model):
     start_time = models.TimeField()
     end_time = models.TimeField()
     status = models.CharField(max_length=20, default="Pending")
+    fee = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
     def __str__(self):
         return f"{self.customer} - {self.room} - {self.date}"
