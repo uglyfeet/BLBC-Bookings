@@ -11,33 +11,60 @@
 
     <h1>Room Availability</h1>
 
-    {% for room in rooms %}
+    <form method="get">
 
-        <h2>{{ room.name }}</h2>
+        <label for="date">Select date:</label>
 
-        {% for booking in bookings %}
+        <input
+            type="date"
+            id="date"
+            name="date"
+            required
+        >
 
-            {% if booking.room.id == room.id %}
+        <button type="submit">View Availability</button>
 
-                <p>
-                    {{ booking.date }}
-                    -
-                    {{ booking.start_time }}
-                    to
-                    {{ booking.end_time }}
-                    -
-                    {{ booking.status }}
-                </p>
+    </form>
 
-            {% endif %}
+    <br>
 
-        {% empty %}
+    <table border="1">
 
-            <p>No rooms available.</p>
+        <thead>
+            <tr>
+                <th>Time</th>
 
-        {% endfor %}
+                {% for room in rooms %}
+                    <th>{{ room.name }}</th>
+                {% endfor %}
+
+            </tr>
+        </thead>
+
+<tbody>
+
+    {% for time in times %}
+
+        <tr>
+            <td>{{ time }}</td>
+
+            {% for room in rooms %}
+
+<td>
+    {% for slot in booked_slots %}
+        {% if slot.room == room.id and slot.time == time %}
+            Booked
+        {% endif %}
+    {% endfor %}
+</td>
+            {% endfor %}
+
+        </tr>
 
     {% endfor %}
+
+</tbody>
+    </table>
 
 </body>
 

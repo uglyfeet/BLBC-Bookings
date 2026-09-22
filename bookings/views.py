@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -99,9 +99,64 @@ def availability(request):
 
     rooms = Room.objects.filter(available=True)
 
+    selected_date = request.GET.get("date")
+
+    times = [
+        "08:00",
+        "08:30",
+        "09:00",
+        "09:30",
+        "10:00",
+        "10:30",
+        "11:00",
+        "11:30",
+        "12:00",
+        "12:30",
+        "13:00",
+        "13:30",
+        "14:00",
+        "14:30",
+        "15:00",
+        "15:30",
+        "16:00",
+        "16:30",
+        "17:00",
+        "17:30",
+        "18:00",
+        "18:30",
+        "19:00",
+        "19:30",
+        "20:00",
+        "20:30",
+        "21:00",
+        "21:30",
+        "22:00",
+    ]
+
     bookings = Booking.objects.filter(
-        date__gte=date.today()
-    ).order_by("date", "start_time")
+        date=selected_date
+    ).order_by("start_time")
+
+    booked_slots = []
+
+    for booking in bookings:
+        current_time = booking.start_time
+
+        while current_time < booking.end_time:
+            booked_slots.append(
+                {
+                    "room": booking.room.id,
+                    "time": current_time.strftime("%H:%M"),
+                }
+            )
+
+            current_time = (
+                datetime.combine(
+                    booking.date,
+                    current_time,
+                )
+                + timedelta(minutes=30)
+            ).time()
 
     return render(
         request,
@@ -109,5 +164,7 @@ def availability(request):
         {
             "rooms": rooms,
             "bookings": bookings,
+            "times": times,
+            "booked_slots": booked_slots,
         },
     )
