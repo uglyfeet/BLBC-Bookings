@@ -27,7 +27,9 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'blbc-bookings-9856ed66dc8a.herokuapp.com',
+]
 
 
 # Application definition
