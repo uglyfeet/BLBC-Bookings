@@ -5,6 +5,8 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
+    verification_code = models.CharField(max_length=6, blank=True)
+    email_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
