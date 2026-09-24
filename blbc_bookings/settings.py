@@ -29,6 +29,8 @@ SECRET_KEY = (
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
     'blbc-bookings-9856ed66dc8a.herokuapp.com',
 ]
 
@@ -155,4 +157,3 @@ MAILERS = {
         },
     },
 }
-

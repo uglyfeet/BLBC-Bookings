@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import render, redirect
-
+from django.core.mail import send_mail
 from .models import Booking, Customer, Room
 import random
 
@@ -67,6 +67,13 @@ def booking(request):
                     verification_code=verification_code,
                     email_verified=False,
                 )
+
+                send_mail(
+                    "BLBC Email Verification",
+                    f"Your verification code is: {verification_code}",
+                    "welch.antony@gmail.com",
+                    [request.POST.get("email")],
+                    )
 
                 start = datetime.strptime(start_time, "%H:%M")
                 end = datetime.strptime(end_time, "%H:%M")
