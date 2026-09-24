@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 
 from .models import Booking, Customer, Room
+import random
 
 
 def home(request):
@@ -57,10 +58,14 @@ def booking(request):
                     "This room is already booked for the selected time.",
                 )
             else:
+                verification_code = str(random.randint(100000, 999999))
+
                 customer = Customer.objects.create(
                     name=request.POST.get("name"),
                     phone=request.POST.get("phone"),
                     email=request.POST.get("email"),
+                    verification_code=verification_code,
+                    email_verified=False,
                 )
 
                 start = datetime.strptime(start_time, "%H:%M")
