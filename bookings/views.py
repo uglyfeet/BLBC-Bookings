@@ -59,14 +59,17 @@ def booking(request):
                 )
             else:
                 verification_code = str(random.randint(100000, 999999))
+                request.session["verification_code"] = verification_code
 
-                customer = Customer.objects.create(
-                    name=request.POST.get("name"),
-                    phone=request.POST.get("phone"),
-                    email=request.POST.get("email"),
-                    verification_code=verification_code,
-                    email_verified=False,
-                )
+                request.session["booking_data"] = {
+                    "name": request.POST.get("name"),
+                    "phone": request.POST.get("phone"),
+                    "email": request.POST.get("email"),
+                    "room": room.id,
+                    "date": date_value,
+                    "start_time": start_time,
+                    "end_time": end_time,
+                }
 
                 send_mail(
                     "BLBC Email Verification",
@@ -81,26 +84,9 @@ def booking(request):
                 duration = Decimal(
                     (end - start).total_seconds()
                 ) / Decimal(3600)
-
                 fee = duration * room.hourly_rate
-
-                Booking.objects.create(
-                    customer=customer,
-                    room=room,
-                    date=date_value,
-                    start_time=start_time,
-                    end_time=end_time,
-                    fee=fee,
-                )
-
-                messages.success(
-                    request,
-                    f"Your booking request has been submitted. "
-                    f"Duration: {duration} hours. "
-                    f"Fee: £{fee:.2f}. "
-                    f"Your booking is currently pending confirmation.",
-                )
-                return redirect("booking")
+                request.session["booking_data"]["fee"] = str(fee)
+                return redirect("verification")
 
     rooms = Room.objects.filter(available=True)
 
@@ -180,3 +166,50 @@ def availability(request):
             "booked_slots": booked_slots,
         },
     )
+
+
+def verification(request):
+    if request.method == "POST":
+        code = request.POST.get("code")
+        saved_code = request.session.get("verification_code")
+
+        if code == saved_code:
+            booking_data = request.session.get("booking_data")
+
+            customer = Customer.objects.create(
+                name=booking_data["name"],
+                phone=booking_data["phone"],
+                email=booking_data["email"],
+                email_verified=True,
+            )
+
+            room = Room.objects.get(id=booking_data["room"])
+
+            Booking.objects.create(
+                customer=customer,
+                room=room,
+                date=booking_data["date"],
+                start_time=booking_data["start_time"],
+                end_time=booking_data["end_time"],
+                fee=booking_data["fee"],
+            )
+
+            del request.session["verification_code"]
+            del request.session["booking_data"]
+
+            messages.success(
+                request,
+                (
+                    "Your email has been verified and your booking "
+                    "has been submitted."
+                ),
+            )
+
+            return redirect("booking")
+
+        messages.error(
+            request,
+            "Invalid verification code.",
+        )
+
+    return render(request, "bookings/verification.html")
