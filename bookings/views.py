@@ -60,7 +60,9 @@ def booking(request):
             else:
                 verification_code = str(random.randint(100000, 999999))
                 request.session["verification_code"] = verification_code
-
+                request.session["verification_expiry"] = (
+                    datetime.now().timestamp() + 600
+                )
                 request.session["booking_data"] = {
                     "name": request.POST.get("name"),
                     "phone": request.POST.get("phone"),
@@ -172,6 +174,16 @@ def verification(request):
     if request.method == "POST":
         code = request.POST.get("code")
         saved_code = request.session.get("verification_code")
+        expiry = request.session.get("verification_expiry")
+        if expiry and datetime.now().timestamp() > expiry:
+            messages.error(
+                request,
+                (
+                    "Your verification code has expired. "
+                    "Please request a new code."
+                ),
+            )
+            return redirect("booking")
 
         if code == saved_code:
             booking_data = request.session.get("booking_data")
@@ -196,6 +208,7 @@ def verification(request):
 
             del request.session["verification_code"]
             del request.session["booking_data"]
+            del request.session["verification_expiry"]
 
             messages.success(
                 request,
