@@ -197,12 +197,15 @@ def verification(request):
 
             room = Room.objects.get(id=booking_data["room"])
 
+            booking_reference = str(random.randint(100000, 999999))
+
             Booking.objects.create(
                 customer=customer,
                 room=room,
                 date=booking_data["date"],
                 start_time=booking_data["start_time"],
                 end_time=booking_data["end_time"],
+                booking_reference=booking_reference,
                 fee=booking_data["fee"],
             )
 
