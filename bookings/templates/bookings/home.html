@@ -62,10 +62,15 @@
                 <div class="col-md-6 col-lg-4 mb-4">
 
                     <div class="card h-100">
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <h3 class="card-title">{{ room.name }}</h3>
+                        {% if room.image %}
+                        <img src="{{ room.image.url }}"
+                            class="card-img-top"
+                            alt="{{ room.name }}">
+                        {% endif %}
 
+                        <h3 class="card-title">{{ room.name }}</h3>
                             <p class="card-text">
                                 {{ room.description }}
                             </p>
