@@ -18,6 +18,7 @@ class Room(models.Model):
     capacity = models.PositiveIntegerField()
     hourly_rate = models.DecimalField(max_digits=6, decimal_places=2)
     available = models.BooleanField(default=True)
+    image = models.ImageField(upload_to="room_images/", blank=True, null=True)
 
     def __str__(self):
         return self.name
