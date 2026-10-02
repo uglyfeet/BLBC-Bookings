@@ -216,8 +216,8 @@ def verification(request):
             messages.success(
                 request,
                 (
-                    "Your email has been verified and your booking "
-                    "has been submitted."
+                    "Your booking has been submitted. "
+                    f"Your booking reference is {booking_reference}."
                 ),
             )
 
