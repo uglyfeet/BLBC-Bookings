@@ -1,1 +1,1 @@
-web: gunicorn blbc_bookings.wsgi
+web: python manage.py migrate && gunicorn blbc_bookings.wsgi
