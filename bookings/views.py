@@ -209,6 +209,22 @@ def verification(request):
                 fee=booking_data["fee"],
             )
 
+            send_mail(
+                "BLBC Booking Confirmation",
+                (
+                    f"Your booking has been received.\n\n"
+                    f"Booking reference: {booking_reference}\n"
+                    f"Room: {room.name}\n"
+                    f"Date: {booking_data['date']}\n"
+                    f"Start time: {booking_data['start_time']}\n"
+                    f"End time: {booking_data['end_time']}\n"
+                    f"Fee: £{booking_data['fee']}\n\n"
+                    "Your booking is currently pending approval."
+                ),
+                "welch.antony@gmail.com",
+                [booking_data["email"]],
+            )
+
             del request.session["verification_code"]
             del request.session["booking_data"]
             del request.session["verification_expiry"]
