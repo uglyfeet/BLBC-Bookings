@@ -245,3 +245,7 @@ def verification(request):
         )
 
     return render(request, "bookings/verification.html")
+
+
+def terms(request):
+    return render(request, "bookings/terms.html")
