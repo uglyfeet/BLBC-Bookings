@@ -23,6 +23,12 @@ class BookingAdmin(admin.ModelAdmin):
         "fee",
     )
 
+    search_fields = (
+        "booking_reference",
+        "customer__name",
+        "customer__email",
+    )
+
     def save_model(self, request, obj, form, change):
         start = datetime.combine(obj.date, obj.start_time)
         end = datetime.combine(obj.date, obj.end_time)
