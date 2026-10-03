@@ -1,4 +1,8 @@
+from datetime import datetime
+from decimal import Decimal
+
 from django.contrib import admin
+
 from .models import Customer, Room, Booking
 
 
@@ -18,3 +22,15 @@ class BookingAdmin(admin.ModelAdmin):
         "status",
         "fee",
     )
+
+    def save_model(self, request, obj, form, change):
+        start = datetime.combine(obj.date, obj.start_time)
+        end = datetime.combine(obj.date, obj.end_time)
+
+        duration = Decimal(
+            (end - start).total_seconds()
+        ) / Decimal(3600)
+
+        obj.fee = duration * obj.room.hourly_rate
+
+        super().save_model(request, obj, form, change)
