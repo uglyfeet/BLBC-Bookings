@@ -23,6 +23,8 @@ class BookingAdmin(admin.ModelAdmin):
         "fee",
     )
 
+    list_filter = ("date",)
+
     search_fields = (
         "booking_reference",
         "customer__name",
