@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from decimal import Decimal
 
 from django.contrib import admin
@@ -8,6 +8,28 @@ from .models import Customer, Room, Booking
 
 admin.site.register(Customer)
 admin.site.register(Room)
+
+
+class UpcomingBookingsFilter(admin.SimpleListFilter):
+    title = "Upcoming"
+    parameter_name = "upcoming"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("next_7_days", "Next 7 days"),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == "next_7_days":
+            today = date.today()
+            next_week = today + timedelta(days=7)
+
+            return queryset.filter(
+                date__gte=today,
+                date__lte=next_week,
+            )
+
+        return queryset
 
 
 @admin.register(Booking)
@@ -23,7 +45,7 @@ class BookingAdmin(admin.ModelAdmin):
         "fee",
     )
 
-    list_filter = ("date",)
+    list_filter = ("date", "status", UpcomingBookingsFilter)
 
     search_fields = (
         "booking_reference",
