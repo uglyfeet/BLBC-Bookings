@@ -218,7 +218,7 @@ def verification(request):
                     f"Date: {booking_data['date']}\n"
                     f"Start time: {booking_data['start_time']}\n"
                     f"End time: {booking_data['end_time']}\n"
-                    f"Fee: £{booking_data['fee']}\n\n"
+                    f"Fee: £{Decimal(booking_data['fee']):.2f}\n\n"
                     "Your booking is currently pending approval."
                 ),
                 "welch.antony@gmail.com",
