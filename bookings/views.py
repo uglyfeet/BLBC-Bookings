@@ -8,6 +8,7 @@ import random
 
 
 def home(request):
+    """Display the home page with available rooms."""
 
     rooms = Room.objects.filter(available=True)
 
@@ -15,7 +16,7 @@ def home(request):
 
 
 def booking(request):
-
+    """Display the booking page and handle booking submissions."""
     if request.method == "POST":
         room = Room.objects.get(id=request.POST.get("room"))
         date_value = request.POST.get("date")
@@ -96,7 +97,7 @@ def booking(request):
 
 
 def availability(request):
-
+    """Display the availability of rooms for a selected date."""
     rooms = Room.objects.filter(available=True)
 
     selected_date = request.GET.get("date")
@@ -171,6 +172,7 @@ def availability(request):
 
 
 def verification(request):
+    """Display the verification page and handle verification submissions."""
     if request.method == "POST":
         code = request.POST.get("code")
         saved_code = request.session.get("verification_code")
@@ -248,4 +250,5 @@ def verification(request):
 
 
 def terms(request):
+    """Display the terms and conditions page."""
     return render(request, "bookings/terms.html")

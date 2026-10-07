@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Customer(models.Model):
+    """Model representing a customer."""
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField()
@@ -9,10 +10,12 @@ class Customer(models.Model):
     email_verified = models.BooleanField(default=False)
 
     def __str__(self):
+        """Return the string representation of the customer."""
         return self.name
 
 
 class Room(models.Model):
+    """Model representing a room."""
     name = models.CharField(max_length=100)
     description = models.TextField()
     capacity = models.PositiveIntegerField()
@@ -21,10 +24,12 @@ class Room(models.Model):
     image = models.ImageField(upload_to="room_images/", blank=True, null=True)
 
     def __str__(self):
+        """Return the string representation of the room."""
         return self.name
 
 
 class Booking(models.Model):
+    """Model representing a booking."""
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     date = models.DateField()
@@ -44,4 +49,5 @@ class Booking(models.Model):
     fee = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
     def __str__(self):
+        """Return the string representation of the booking."""
         return f"{self.customer} - {self.room} - {self.date}"
