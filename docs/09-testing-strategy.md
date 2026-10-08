@@ -24,6 +24,9 @@ Test results will be recorded during the development phase.
 ### Lighthouse
 ![Lighthouse results](../assets/images/tests/lighthouse.png)
 
+### GitHub CI
+![GitHub CI successful run](../assets/images/tests/github-ci-success.png)
+
 ### Home page
 ![Home page results](../assets/images/tests/home-page.png)
 
