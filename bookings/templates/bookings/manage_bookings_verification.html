@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLBC | Verify Booking Access</title>
+</head>
+
+<body>
+
+    <h1>Verify Access to Your Booking</h1>
+
+    <p>We have sent a verification code to your email address.</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="code">Verification code:</label>
+        <input
+            type="text"
+            id="code"
+            name="code"
+            maxlength="6"
+            inputmode="numeric"
+            required>
+
+        <button type="submit">Verify</button>
+    </form>
+
+</body>
+
+</html>

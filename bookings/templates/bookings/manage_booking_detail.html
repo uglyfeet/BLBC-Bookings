@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLBC | My Booking</title>
+</head>
+
+<body>
+
+    <h1>My Booking</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <p><strong>Reference:</strong> {{ booking.booking_reference }}</p>
+    <p><strong>Room:</strong> {{ booking.room.name }}</p>
+    <p><strong>Date:</strong> {{ booking.date }}</p>
+    <p><strong>Start time:</strong> {{ booking.start_time }}</p>
+    <p><strong>End time:</strong> {{ booking.end_time }}</p>
+    <p><strong>Fee:</strong> £{{ booking.fee }}</p>
+    <p><strong>Status:</strong> {{ booking.status }}</p>
+
+    <p>
+        If you edit your booking, it will return to Pending
+        until the church reviews the changes.
+    </p>
+
+    <a href="{% url 'edit_booking' booking.id %}">Edit Booking</a>
+
+    <hr>
+
+    <h2>Delete Booking</h2>
+    <p>This action cannot be undone. Are you sure?</p>
+
+    <form
+        method="post"
+        action="{% url 'delete_booking' booking.id %}">
+        {% csrf_token %}
+        <button type="submit">Confirm Delete</button>
+    </form>
+
+    <p><a href="{% url 'home' %}">Return Home</a></p>
+
+</body>
+
+</html>
