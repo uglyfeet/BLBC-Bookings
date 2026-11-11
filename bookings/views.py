@@ -190,12 +190,17 @@ def verification(request):
         if code == saved_code:
             booking_data = request.session.get("booking_data")
 
-            customer = Customer.objects.create(
-                name=booking_data["name"],
-                phone=booking_data["phone"],
-                email=booking_data["email"],
-                email_verified=True,
-            )
+            customer = Customer.objects.filter(
+                email__iexact=booking_data["email"]
+            ).first()
+
+            if customer is None:
+                customer = Customer.objects.create(
+                    name=booking_data["name"],
+                    phone=booking_data["phone"],
+                    email=booking_data["email"],
+                    email_verified=True,
+                )
 
             room = Room.objects.get(id=booking_data["room"])
 

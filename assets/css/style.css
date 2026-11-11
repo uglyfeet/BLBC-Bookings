@@ -1,0 +1,108 @@
+/* BLBC Booking System Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins&display=swap');
+
+:root {
+    --primary-font: "DM Serif Display", serif;
+    --secondary-font: "Poppins", sans-serif;
+    --primary-color: #723d46;
+    --secondary-color: #c9cba3;
+    --highlight-color: #e26d5c;
+    --highlight-color-light: #ffe1a8;
+}
+
+/* General styles */
+
+body {
+    font-family: var(--secondary-font);
+    background-color: #f8f8f4;
+    color: #333;
+    padding-top: 70px;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--primary-font);
+    color: var(--primary-color);
+}
+
+/* Navbar */
+
+#navbar {
+    background-color: var(--primary-color);
+}
+
+#navbar .navbar-brand,
+#navbar .nav-link {
+    color: white;
+}
+
+#navbar .nav-link:hover {
+    color: var(--highlight-color-light);
+}
+
+/* Page headings */
+
+.page-heading {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+/* Room cards */
+
+.card {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-title {
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #5a3038;
+    border-color: #5a3038;
+}
+
+/* Availability table */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: white;
+}
+
+th,
+td {
+    border: 1px solid #c9cba3;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #723d46;
+    color: white;
+}
+
+td {
+    height: 45px;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f8f4;
+}

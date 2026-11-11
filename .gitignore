@@ -35,3 +35,5 @@ dist/
 *.egg-info/
 db.sqlite3
 media/
+
+staticfiles/
