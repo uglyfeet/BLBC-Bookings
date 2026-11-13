@@ -54,11 +54,11 @@
 
     <br>
 
-    <table border="1">
-
-        <thead>
-            <tr>
-                <th>Time</th>
+    <div class="table-responsive">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Time</th>
 
                 {% for room in rooms %}
                     <th>{{ room.name }}</th>
@@ -66,7 +66,8 @@
 
             </tr>
         </thead>
-
+    </div>
+    
 <tbody>
 
     {% for time in times %}
