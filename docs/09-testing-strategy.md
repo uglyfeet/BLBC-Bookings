@@ -33,11 +33,26 @@ Test results will be recorded during the development phase.
 ### Booking page
 ![Booking page](../assets/images/tests/booking-page.png)
 
-### Availabilty page
+### Availability page
 ![Availability page](../assets/images/tests/availability-page.png)
 
 ## Admin page
 ![Admin page](../assets/images/tests/admin-page.png)
+
+### Manage My Bookings
+![Manage My Bookings](../assets/images/tests/manage-bookings.png)
+
+### Edit Booking
+![Edit Booking](../assets/images/tests/edit-booking.png)
+
+### Booking Updated
+![Booking successfully updated](../assets/images/tests/booking-updated.png)
+
+### Booking Deleted
+![Booking successfully deleted](../assets/images/tests/booking-deleted.png)
+
+### Mobile Home Page
+![Mobile home page showing responsive navigation](../assets/images/tests/mobile-home-page.png)
 
 ## Manual Test Results
 
@@ -54,11 +69,14 @@ The following manual tests were carried out during development and on the deploy
 | Calculate the booking fee | Correct fee is calculated and displayed | Passed |
 | View room availability | Availability is displayed correctly | Passed |
 | View a booking in Django admin | Booking details are displayed correctly | Passed |
-| Amend a booking through the website | Changes are saved correctly | Passed |
+| Create a booking through the website | Booking is saved and displayed in Manage My Bookings | Passed |
+| View a customer's bookings | The customer's booking details are displayed | Passed |
+| Amend a booking through the website | Changes are saved and availability is updated | Passed |
+| Delete a booking through the website | Booking is removed and the time slot becomes available | Passed |
 | Edit or delete a booking through Django admin | Changes are saved or the booking is removed | Passed |
 | Check booking amendment history | Website amendments are not recorded in Django admin history | Improvement identified |
 
-The deployed website was tested to confirm that booking submission, email verification and the display of booking details in Django admin worked correctly.
+The deployed website was tested on desktop, mobile phone and iPad in both portrait and landscape orientations. The tests confirmed that the pages displayed correctly and that the booking system's main functions worked as expected.
 
 **Note:** The booking amendment history limitation is documented under Future Improvement.
 
