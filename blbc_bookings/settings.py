@@ -177,3 +177,11 @@ STORAGES = {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
 }
+
+# Security settings
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_SSL_REDIRECT = 'DYNO' in os.environ
+SESSION_COOKIE_SECURE = 'DYNO' in os.environ
+CSRF_COOKIE_SECURE = 'DYNO' in os.environ
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
