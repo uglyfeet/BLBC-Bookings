@@ -54,6 +54,21 @@ Test results will be recorded during the development phase.
 ### Mobile Home Page
 ![Mobile home page showing responsive navigation](../assets/images/tests/mobile-home-page.png)
 
+### Tablet Home Page
+![Tablet home page showing responsive layout](../assets/images/tests/tablet-home-page-final.png)
+
+### Mobile Availability Page
+![Mobile availability page](../assets/images/tests/mobile-availability-page.png)
+
+### Tablet Availability Page
+![Tablet availability page](../assets/images/tests/tablet-availability-page.png)
+
+### Mobile Booking Page
+![Mobile booking page](../assets/images/tests/mobile-booking-page.png)
+
+### Tablet Booking Page
+![Tablet booking page](../assets/images/tests/tablet-booking-page.png)
+
 ## Manual Test Results
 
 The following manual tests were carried out during development and on the deployed website.

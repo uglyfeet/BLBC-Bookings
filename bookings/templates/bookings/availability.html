@@ -35,6 +35,9 @@
 
     {% include 'bookings/navbar.html' %}
 
+
+<main class="container py-4">
+
     <h1>Room Availability</h1>
 
     <form method="get">
@@ -60,39 +63,37 @@
                 <tr>
                     <th>Time</th>
 
-                {% for room in rooms %}
-                    <th>{{ room.name }}</th>
+                    {% for room in rooms %}
+                        <th>{{ room.name }}</th>
+                    {% endfor %}
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for time in times %}
+                    <tr>
+                        <td>{{ time }}</td>
+
+                        {% for room in rooms %}
+                            <td>
+                                {% for slot in booked_slots %}
+                                    {% if slot.room == room.id and slot.time == time %}
+                                        Booked
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+
+                    </tr>
                 {% endfor %}
-
-            </tr>
-        </thead>
+            </tbody>
+        </table>
     </div>
-    
-<tbody>
 
-    {% for time in times %}
+</main>
 
-        <tr>
-            <td>{{ time }}</td>
-
-            {% for room in rooms %}
-
-<td>
-    {% for slot in booked_slots %}
-        {% if slot.room == room.id and slot.time == time %}
-            Booked
-        {% endif %}
-    {% endfor %}
-</td>
-            {% endfor %}
-
-        </tr>
-
-    {% endfor %}
-
-</tbody>
-    </table>
-
+{% include 'bookings/footer.html' %}
 </body>
 
 </html>

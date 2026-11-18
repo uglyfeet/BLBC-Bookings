@@ -33,7 +33,7 @@
 <body>
     
     {% include 'bookings/navbar.html' %}
-
+<main class="container py-4">
     <h1>My Booking</h1>
 
     {% if messages %}
@@ -70,7 +70,8 @@
     </form>
 
     <p><a href="{% url 'home' %}">Return Home</a></p>
-
+</main>
+{% include 'bookings/footer.html' %}
 </body>
 
 </html>

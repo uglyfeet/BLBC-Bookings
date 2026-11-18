@@ -33,7 +33,7 @@
 <body>
 
     {% include 'bookings/navbar.html' %}
-
+<main class="container py-4">
     <h1>Edit My Booking</h1>
 
     {% if messages %}
@@ -105,7 +105,9 @@
         Your booking will return to Pending for church approval
         after you save changes.
     </p>
+</main>
 
+{% include 'bookings/footer.html' %}
 </body>
 
 </html>
